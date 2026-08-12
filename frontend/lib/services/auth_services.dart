@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class AuthService {
-  final String baseUrl = 'http://10.0.2.2:3000/api';
+  final String baseUrl = 'https://training-gacha2.vercel.app/api';
 
   Future<Map<String, dynamic>> login(
       String email,

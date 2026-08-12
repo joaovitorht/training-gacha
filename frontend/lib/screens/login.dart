@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import '../services/auth_services.dart';
+import '../services/auth_storage.dart';
+import 'home.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -30,11 +32,23 @@ class _LoginScreenState extends State<LoginScreen> {
       print('LOGIN REALIZADO!');
       print(data);
 
+      // Pega o token retornado pela API
+      final token = data['token'];
+
+      if (token == null) {
+        throw Exception('Token não foi recebido.');
+      }
+
+      // Salva o token no celular
+      await AuthStorage.salvarToken(token);
+
       if (!mounted) return;
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Login realizado com sucesso!'),
+      // Vai para a tela principal
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const HomeScreen(),
         ),
       );
     } catch (e) {
